@@ -1,3 +1,4 @@
+from time import perf_counter
 from random import randint
 
 import click
@@ -83,12 +84,15 @@ def main(count: int, autoplay: bool, verbose: bool):
     else:
         logging.basicConfig(format="%(message)s", level=logging.INFO)
     rps = RockPaperScissors(autoplay, game_count=count)
+    tic = perf_counter()
     rps.simulate_games()
+    toc = perf_counter()
 
     LOGGER.info(
         f"Results\n\nGames Played: {rps.game_count}\nWins: {rps.wins}"
         f"\nLosses: {rps.losses}\nWin Percentage {rps.wins/count:.2%}"
     )
+    LOGGER.info(f"Simulated {count} games in {(toc-tic):.2} seconds.")
 
 
 if __name__ == "__main__":
